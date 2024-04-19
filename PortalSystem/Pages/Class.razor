@@ -1,0 +1,112 @@
+﻿@page "/Class"
+
+<EditForm Model="ModelVm" OnValidSubmit="SaveRecord">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="classname" class="form-label">Class Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="classname" aria-describedby="classname" @bind="ModelVm.ClassName">
+                        <ValidationMessage For="()=> ModelVm.ClassName" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="gradelevel" class="form-label">Grade Level <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="gradelevel" aria-describedby="gradelevel" @bind="ModelVm.GradeLevel">
+                        <ValidationMessage For="()=> ModelVm.GradeLevel" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="timming" class="form-label">Timming <span class="text-danger">*</span></label>
+                        <select class="form-select" aria-label="Default select example" @bind="ModelVm.Time">
+                            <option selected>--Select Time--</option>
+                            @foreach (var item in timmingList)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                        <ValidationMessage For="()=> ModelVm.Time" />
+                    </div>
+                </div>
+                <div class="col-6">
+
+                    <div class="mb-3">
+                        <label for="maxsize" class="form-label">Max Size <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="maxsize" aria-describedby="gradelevel" @bind="ModelVm.TotalSets">
+                        <ValidationMessage For="()=> ModelVm.TotalSets" />
+                    </div>
+                </div>
+            </div>
+           
+            @if (ModelVm.Id > 0)
+            {
+                <button type="submit" class="btn btn-primary float-end mb-3">Update</button>
+                <button type="button" class="btn btn-secondary float-end me-2 mb-3" @onclick="Cancel">Cancel</button>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-primary float-end mb-3">Save</button>
+            }
+            
+
+            <!--Data View Grid-->
+            @if (recordList.Count > 0)
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">S.No</th>
+                            <th scope="col">Class Name</th>
+                            <th scope="col">Grade Level</th>
+                            <th scope="col">Timming</th>
+                            <th scope="col">Total Sets</th>
+                            <th scope="col">Remaining Sets</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int i = 0;
+                        }
+                        @foreach (var item in recordList)
+                        {
+                            i++;
+                            <tr>
+                                <td>@i</td>
+                                <td>@item.ClassName</td>
+                                <td>@item.GradeLevel</td>
+                                <td>@item.Time</td>
+                                <td>@item.TotalSets</td>
+                                <td>@item.RemainingSets</td>
+                                <td>
+                                    <a style="cursor:pointer" title="Edit Record" @onclick="()=>EditRecord(item.Id)"><i class="fa fa-pencil text-success" aria-hidden="true"></i></a>
+                                    <a style="cursor:pointer" title="Delete Record" @onclick="()=>DeleteRecord(item.Id)"><i class="fa-solid fa-trash-can ms-1 text-danger"></i></a>
+                                </td>
+                            </tr>
+                        }
+                      
+
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>There are no record in database</p>
+            }
+
+
+        </div>
+    </div>
+</EditForm>
+
+@if (IsDeleteConfirmation)
+{
+    <DeleteConfirmation Message="Are you sure want to delete this record" Title="Delete Record" DeleteRecord="DeleteConfirmation"/>
+}
+
+@code {
+
+}

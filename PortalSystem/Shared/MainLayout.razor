@@ -1,0 +1,50 @@
+﻿@using PortalSystem.View_Models
+@inherits LayoutComponentBase
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+<PageTitle>PortalSystem</PageTitle>
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4" style="background:#094e99">
+            <p class="mt-3 text-white">Welcome : <span>@UserName</span></p>
+            <a href="/account/SignOutPost" style="color:white">Logout</a>
+        </div>
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code {
+    // protected async override Task OnInitializedAsync()
+    // {
+    //     var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+    //     var user = authState.User;
+
+    //     // Check if user is authenticated
+    //     if (!user.Identity.IsAuthenticated)
+    //     {
+    //         // Redirect to login page
+    //         Navigation.NavigateTo("/Account/Identity/Login");
+    //     }
+    // }
+
+    public string? UserName { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        UserName = user.Identity.Name;
+        if (!user.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo("Account/Identity/Login");
+        }
+    }
+}

@@ -1,0 +1,47 @@
+﻿@page "/"
+@using PortalSystem.Components
+<div class="row">
+
+    @foreach (var item in classRecordList)
+    {
+        <div class="col-lg-3 col-6">
+
+            <div class="small-box text-white" style="background:#094e99">
+                <div class="inner">
+                    <h3>@item.ClassName</h3>
+                    <p>Class</p>
+                    <div class="d-flex justify-content-between">
+                        <p>Grade Level : <span>@item.GradeLevel</span></p>
+                        <p>Timming : <span>@item.Time</span></p>
+                    </div>
+                    <p>Total Sets : <span>@item.TotalSets</span></p>
+                    <p>Remaining Sets : <span>@item.RemainingSets</span></p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+                @if (item.RemainingSets > 0)
+                {
+                    <a href="#" class="small-box-footer text-white @(item.ChangeEnrollStatus ? "disabled-link" : "")" @onclick="()=>EnrollInClass(item.Id)">@(item.ChangeEnrollStatus ? "Enrolled" : "Enroll Now")&nbsp;<i class="fas fa-arrow-circle-right"></i></a>
+                }
+                else
+                {
+                    <a href="#" class="small-box-footer text-white disabled-link">No Available Set <i class="fas fa-arrow-circle-right"></i></a>
+                }
+                <AuthorizeView Roles="Admin">
+                    <a href="#" class="small-box-footer bg-success text-white" @onclick="()=>ShowEnrollerUser(item.Id)">View Enrolled Users <i class="fas fa-arrow-circle-right"></i></a>
+                </AuthorizeView>
+                
+            </div>
+        </div>
+    }
+
+  @if (IsEnrollMessage)
+    {
+        <CongratulationMessage Title="Congratulation Message" Message="Congratulations on being enrolled in the class" HideVisibility="HideVisibility" />
+    }
+    @if (IsViewEnrolledList)
+    {
+        <EnrolledUserList Title="Enrolled Users" ClassId="@ClassId" HideVisibilty="HideEnrollerUser" />
+    }
+</div>

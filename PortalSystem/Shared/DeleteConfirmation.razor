@@ -1,0 +1,21 @@
+﻿<div class="modal d-block" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="()=>DeleteConfirmationRecord(false)"></button>
+            </div>
+            <div class="modal-body">
+                <p>@Message</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="()=>DeleteConfirmationRecord(false)">No</button>
+                <button type="button" class="btn btn-primary" @onclick="()=>DeleteConfirmationRecord(true)">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+}

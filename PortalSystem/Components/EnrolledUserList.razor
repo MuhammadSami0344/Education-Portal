@@ -1,0 +1,58 @@
+﻿<div class="modal d-block" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="HideComponent"></button>
+            </div>
+            <div class="modal-body">
+               
+                <!--Data Grid For Users Enrolled In Class-->
+                @if (classRecord.Count > 0)
+                {
+                    <table class="table table-striped table-sm projects dataTable no-footer dtr-inline" style="font-size:14px">
+                        <thead>
+                            <tr class="card-header-gray">
+                                <th>S.No </th>
+                                <th>User Name</th>
+                                <th>Class Name</th>
+                                <th>Grade Level</th>
+                                <th>Enrolled Date</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int i = 0;
+                            }
+                            @foreach (var item in classRecord)
+                            {
+                                i++;
+                                <tr>
+                                    <td>@i</td>
+                                    <td>@item.UserName</td>
+                                    <td>@item.ClassName</td>
+                                    <td>@item.GradeLevel</td>
+                                    <td>@item.EnrolledDate?.ToString("dd-MMM-yyyy")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>There are no record in database</p>
+                }
+
+            </div>
+            <div class="modal-footer">
+                
+                <button type="button" class="btn btn-secondary" @onclick="HideComponent">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+}
